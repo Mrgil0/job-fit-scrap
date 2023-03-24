@@ -1,4 +1,4 @@
-import { Jobpost } from 'src/entities/jobpost.entity'
+import { Jobpost } from '../entities/jobpost.entity'
 import {
     Column,
     CreateDateColumn,

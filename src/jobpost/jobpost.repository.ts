@@ -1,9 +1,9 @@
 import { DataSource, Repository } from 'typeorm'
-import { Jobpost } from 'src/entities/jobpost.entity'
+import { Jobpost } from '../entities/jobpost.entity'
 import { Injectable } from '@nestjs/common'
-import { CompanyRepository } from 'src/company/company.repository'
-import { Keyword } from 'src/entities/keyword.entity'
-import { Stack } from 'src/entities/stack.entity'
+import { CompanyRepository } from '../company/company.repository'
+import { Keyword } from '../entities/keyword.entity'
+import { Stack } from '../entities/stack.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { default as keywords } from '../resources/data/parsing/keywordsForParsing.json'
 import { default as stacks } from '../resources/data/parsing/stacksForParsing.json'
@@ -143,59 +143,5 @@ export class JobpostRepository extends Repository<Jobpost> {
         }
 
         return { keywords: contentKeywords, stacks: contentStacks }
-    }
-    async getAddresses() {
-        const todayDate = new Date(Date.now())
-
-        const where = `AND j.updated_dtm > '${todayDate.getFullYear()}-${
-            todayDate.getMonth() + 1
-        }-${todayDate.getDate() - 1}'`
-
-        const addressUpper = await this.query(`select address_upper
-                                                from jobpost j
-                                                where address_upper is not null ${where}
-                                                group by address_upper 
-                                                order by address_upper asc`)
-
-        const addressLower = await this
-            .query(`select address_upper, address_lower
-                    from jobpost j 
-                    where address_lower is not null and address_upper is not null ${where}
-                    group by address_lower 
-                    order by address_upper asc, address_lower asc`)
-
-        return { addressUpper, addressLower }
-    }
-
-    async getStacks() {
-        const todayDate = new Date(Date.now())
-
-        const where = `AND j.updated_dtm > '${todayDate.getFullYear()}-${
-            todayDate.getMonth() + 1
-        }-${todayDate.getDate() - 1}'`
-
-        return await this.query(`select j2.stack, j2.category
-                                from jobpost j
-                                left join (select j.stack_id, j.jobpost_id, stack, category
-                                from jobpoststack j 
-                                left join stack s on j.stack_id = s.stack_id) j2 on j.jobpost_id = j2.jobpost_id
-                                where j2.stack is not null ${where}
-                                group by j2.stack
-                                order by j2.category asc, j2.stack asc`)
-    }
-    async getKeywords() {
-        const todayDate = new Date(Date.now())
-
-        const where = `WHERE jp.updated_dtm > '${todayDate.getFullYear()}-${
-            todayDate.getMonth() + 1
-        }-${todayDate.getDate() - 1}'`
-
-        return await this
-            .query(`select j.jobpost_id, j.keyword_code, keyword from jobpostkeyword j 
-                    left join keyword k on j.keyword_code = k.keyword_code 
-                    left join jobpost jp on j.jobpost_id = jp.jobpost_id
-                    ${where}
-                    group by keyword_code
-                    order by keyword asc`)
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { CompanyRepository } from 'src/company/company.repository'
+import { CompanyRepository } from '../company/company.repository'
 import { JobpostRepository } from './jobpost.repository'
 import { wantedScraper } from './scraper/jobpostWantedAxiosScraper'
 import { SaraminSelenium } from './scraper/jobpostSaraminSeleniumScraper'
@@ -39,15 +39,5 @@ export class JobpostService {
 
         // 채용공고 데이터 넣기
         await this.jobpostRepository.createJobposts(jobposts)
-    }
-    async getAddresses() {
-        return await this.jobpostRepository.getAddresses()
-    }
-    async getStacks() {
-        return await this.jobpostRepository.getStacks()
-    }
-
-    async getKeywords() {
-        return await this.jobpostRepository.getKeywords()
     }
 }

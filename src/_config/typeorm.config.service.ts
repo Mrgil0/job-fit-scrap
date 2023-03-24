@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config/dist'
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
-import { User } from 'src/entities/user.entity'
-import { Jobpost } from 'src/entities/jobpost.entity'
+import { User } from '../entities/user.entity'
+import { Jobpost } from '../entities/jobpost.entity'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
-import { Company } from 'src/entities/company.entity'
-import { Keyword } from 'src/entities/keyword.entity'
-import { Stack } from 'src/entities/stack.entity'
+import { Company } from '../entities/company.entity'
+import { Keyword } from '../entities/keyword.entity'
+import { Stack } from '../entities/stack.entity'
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {

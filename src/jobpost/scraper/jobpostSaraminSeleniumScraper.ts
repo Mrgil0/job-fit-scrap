@@ -2,7 +2,7 @@ import { Builder, By, until } from 'selenium-webdriver'
 import { Options } from 'selenium-webdriver/chrome'
 import { PageLoadStrategy } from 'selenium-webdriver/lib/capabilities'
 import { SaraminScraper } from './jobpostSaraminAxiosScraper'
-import { CompanyRepository } from 'src/company/company.repository'
+import { CompanyRepository } from '../../company/company.repository'
 import { JobpostRepository } from '../jobpost.repository'
 const axios = require('axios')
 const cheerio = require('cheerio')

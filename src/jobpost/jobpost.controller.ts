@@ -26,19 +26,4 @@ export class JobpostController {
 	async getProgrammersJobposts() {
 			return await this.jobpostService.getProgrammersJobposts()
 	}
-
-	@Get('/addresses')
-	async getAddresses() {
-			return await this.jobpostService.getAddresses()
-	}
-
-	@Get('/stacks')
-	async getStacks() {
-			return await this.jobpostService.getStacks()
-	}
-
-	@Get('/keywords')
-	async getKeywords() {
-			return await this.jobpostService.getKeywords()
-	}
 }
